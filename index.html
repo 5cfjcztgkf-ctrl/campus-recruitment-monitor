@@ -64,21 +64,11 @@
   @media(max-width:640px){
     .stats{grid-template-columns:repeat(2,1fr)}
     .header h1{font-size:1.3rem}
-    /* 手机端表格变成卡片布局 */
-    table,thead,tbody,th,td,tr{display:block}
-    thead tr{position:absolute;top:-9999px;left:-9999px}
-    tr{border-bottom:1px solid var(--border);padding:12px 0}
-    tr:last-child{border-bottom:none}
-    td{padding:4px 12px;border:none;text-align:left;display:flex;align-items:center;gap:8px;font-size:.78rem}
-    td:before{content:attr(data-label);font-size:.68rem;color:var(--text-secondary);min-width:60px;flex-shrink:0;font-weight:600}
-    .detail-row{display:none}
-    .detail-row.open{display:block}
-    .detail-row td{padding:8px 12px;display:block}
-    .detail-row td:before{display:none}
     .detail-grid{grid-template-columns:1fr}
-    /* 原文按钮大一点好点 */
-    .link-btn{font-size:1.2rem;padding:6px 12px}
-    .expand-btn{font-size:.8rem;padding:4px 8px}
+    .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    table{min-width:620px}
+    th,td{white-space:nowrap;padding:8px 10px;font-size:.72rem}
+    th{font-size:.68rem}
   }
 </style>
 </head>
@@ -162,12 +152,12 @@ function render(){
       `<a href="${d.notice_url_link}" target="_blank" rel="noopener" class="link-btn" title="阅读原文通知">📄 原文</a>` :
       `<span class="no-data">—</span>`;
     return `<tr>
-      <td data-label="高校">${d.name}${d.urgent?' <span class="badge">⚠</span>':''}</td>
-      <td data-label="状态">${tag}</td>
-      <td data-label="场地预约">${bk}</td>
-      <td data-label="进校启动">${et}</td>
-      <td data-label="通知">${linkBtn}</td>
-      <td data-label="详情"><button class="expand-btn" onclick="toggle(${idx})">展开 ▾</button></td>
+      <td>${d.name}${d.urgent?' <span class="badge">⚠</span>':''}</td>
+      <td>${tag}</td>
+      <td>${bk}</td>
+      <td>${et}</td>
+      <td>${linkBtn}</td>
+      <td><button class="expand-btn" onclick="toggle(${idx})">详情 ▾</button></td>
     </tr>
     <tr class="detail-row" id="d-${idx}">
       <td colspan="6"><div class="detail-grid">${detail.map(([k,v])=>`<div class="detail-item"><span class="k">${k}：</span><span class="v">${v}</span></div>`).join('')}</div></td>
