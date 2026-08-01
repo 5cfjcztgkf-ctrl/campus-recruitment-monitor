@@ -61,6 +61,17 @@
   .loading{text-align:center;padding:40px;color:var(--text-secondary)}
   .footer{text-align:center;padding:28px 0;color:var(--text-secondary);font-size:.7rem}
   .badge{display:inline-block;margin-left:6px;font-size:.65rem;color:var(--orange);font-weight:600}
+  /* 密码锁屏 */
+  #lockScreen{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;align-items:center;justify-content:center;flex-direction:column}
+  #lockScreen .lock-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:32px 24px;text-align:center;max-width:320px;width:90%}
+  #lockScreen .lock-icon{font-size:2.4rem;margin-bottom:12px}
+  #lockScreen h2{font-size:1.1rem;margin-bottom:6px}
+  #lockScreen .hint{font-size:.74rem;color:var(--text-secondary);margin-bottom:18px}
+  #lockScreen input{width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;text-align:center;outline:none;letter-spacing:2px}
+  #lockScreen input:focus{border-color:var(--accent)}
+  #lockScreen button{margin-top:12px;width:100%;padding:10px;border-radius:8px;border:none;background:var(--accent);color:#fff;font-size:.9rem;font-weight:600;cursor:pointer}
+  #lockScreen .err{color:var(--red);font-size:.74rem;margin-top:8px;display:none}
+  #mainContent{display:none}
   @media(max-width:640px){
     .stats{grid-template-columns:repeat(2,1fr)}
     .header h1{font-size:1.3rem}
@@ -73,6 +84,20 @@
 </style>
 </head>
 <body>
+<!-- 密码锁屏 -->
+<div id="lockScreen">
+  <div class="lock-box">
+    <div class="lock-icon">🔒</div>
+    <h2>秋招监控看板</h2>
+    <div class="hint">请输入密码查看</div>
+    <input type="password" id="pwdInput" placeholder="输入密码" autofocus>
+    <button onclick="verify()">确认</button>
+    <div class="err" id="pwdErr">密码错误，请重试</div>
+  </div>
+</div>
+
+<!-- 主内容 -->
+<div id="mainContent">
 <div class="container">
   <div class="header">
     <h1>🎯 秋招进校监控看板</h1>
@@ -97,6 +122,7 @@
   </div>
   <div class="footer">李双利 · 每日 8 次自动更新 · GitHub Actions 驱动</div>
 </div>
+</div><!-- /mainContent -->
 
 <script>
 let DATA = [];
@@ -177,7 +203,40 @@ function filter(f){
   render();
 }
 
-load();
+// ===== 密码验证 =====
+const PWD_HASH = '2a135ed1f95982f85a4b2e636479b520177e1ebad2917dbcb72c414278bd9752';
+
+async function sha256(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+async function verify() {
+  const input = document.getElementById('pwdInput').value;
+  const hash = await sha256(input);
+  if (hash === PWD_HASH) {
+    sessionStorage.setItem('campus_auth', '1');
+    document.getElementById('lockScreen').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    load();
+  } else {
+    document.getElementById('pwdErr').style.display = 'block';
+    document.getElementById('pwdInput').value = '';
+    document.getElementById('pwdInput').focus();
+  }
+}
+
+// 回车触发验证
+document.getElementById('pwdInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') verify();
+});
+
+// 检查是否已通过验证
+if (sessionStorage.getItem('campus_auth') === '1') {
+  document.getElementById('lockScreen').style.display = 'none';
+  document.getElementById('mainContent').style.display = 'block';
+  load();
+}
 </script>
 </body>
 </html>
