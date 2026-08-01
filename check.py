@@ -250,6 +250,18 @@ def main():
     # 更新数据文件的时间戳
     data["last_updated"] = datetime.now(TZ).strftime("%Y-%m-%dT%H:%M:%S+08:00")
 
+    # 自动更新：如果 pending 的高校发现了新通知，更新 notice_url_link
+    for c in changes:
+        for u in universities:
+            if u["name"] == c["university"] and u["status"] == "pending" and c["new_notices"]:
+                # 取第一个匹配的链接
+                first = c["new_notices"][0]
+                u["notice_url_link"] = first["url"]
+                u["notice_title"] = first["text"]
+                u["notice_date"] = parse_date_from_text(first["text"]) or datetime.now(TZ).strftime("%Y-%m")
+                print(f"\n🔗 自动更新 {u['name']} 的通知链接: {first['url']}")
+                break
+
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 

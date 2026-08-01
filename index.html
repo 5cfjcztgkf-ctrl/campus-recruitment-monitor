@@ -47,6 +47,8 @@
   .date-warn{color:var(--yellow);font-weight:600;white-space:nowrap}
   .no-data{color:var(--text-secondary);font-style:italic}
   .expand-btn{background:none;border:none;color:var(--accent);cursor:pointer;font-size:.74rem}
+  .link-btn{display:inline-block;text-decoration:none;font-size:1rem;padding:2px 6px;border-radius:6px;transition:all .2s}
+  .link-btn:hover{background:rgba(78,140,255,.15);transform:scale(1.15)}
   .detail-row{display:none}
   .detail-row.open{display:table-row}
   .detail-row td{padding:12px 14px;background:rgba(0,0,0,.15);font-size:.74rem;color:var(--text-secondary)}
@@ -80,8 +82,8 @@
   <div class="filter-bar" id="filterBar"></div>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>高校</th><th>状态</th><th>场地预约</th><th>进校启动</th><th></th></tr></thead>
-      <tbody id="tableBody"><tr><td colspan="5" class="loading">正在加载数据...</td></tr></tbody>
+      <thead><tr><th>高校</th><th>状态</th><th>场地预约</th><th>进校启动</th><th>原文</th><th></th></tr></thead>
+      <tbody id="tableBody"><tr><td colspan="6" class="loading">正在加载数据...</td></tr></tbody>
     </table>
   </div>
 
@@ -105,7 +107,7 @@ async function load() {
     DATA = json.universities;
     document.getElementById('updateTime').textContent = '最后更新：' + json.last_updated;
   } catch(e) {
-    document.getElementById('tableBody').innerHTML = '<tr><td colspan="5" class="loading">⚠️ 数据加载失败，请稍后刷新</td></tr>';
+    document.getElementById('tableBody').innerHTML = '<tr><td colspan="6" class="loading">⚠️ 数据加载失败，请稍后刷新</td></tr>';
     console.error(e);
     return;
   }
@@ -144,15 +146,19 @@ function render(){
       ['联系方式', d.contact||'—'],['就业网', d.employment_url||''],['公众号', d.wechat_name||'']
     ];
     if(d.notes) detail.push(['备注', d.notes]);
+    const linkBtn = d.notice_url_link ? 
+      `<a href="${d.notice_url_link}" target="_blank" rel="noopener" class="link-btn" title="阅读原文通知">📄 原文</a>` :
+      `<span class="no-data">—</span>`;
     return `<tr>
       <td>${d.name}${d.urgent?' <span class="badge">⚠</span>':''}</td>
       <td>${tag}</td>
       <td>${bk}</td>
       <td>${et}</td>
+      <td>${linkBtn}</td>
       <td><button class="expand-btn" onclick="toggle(${idx})">详情 ▾</button></td>
     </tr>
     <tr class="detail-row" id="d-${idx}">
-      <td colspan="5"><div class="detail-grid">${detail.map(([k,v])=>`<div class="detail-item"><span class="k">${k}：</span><span class="v">${v}</span></div>`).join('')}</div></td>
+      <td colspan="6"><div class="detail-grid">${detail.map(([k,v])=>`<div class="detail-item"><span class="k">${k}：</span><span class="v">${v}</span></div>`).join('')}</div></td>
     </tr>`;
   }).join('');
 }
