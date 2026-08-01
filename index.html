@@ -149,7 +149,7 @@ function render(){
     ];
     if(d.notes) detail.push(['备注', d.notes]);
     const linkBtn = d.notice_url_link ? 
-      `<a href="${d.notice_url_link}" target="_blank" rel="noopener" class="link-btn" title="阅读原文通知">📄 原文</a>` :
+      `<a href="${d.notice_url_link}" target="_blank" rel="noopener" class="link-btn" title="查看微信推文原文"><svg width="14" height="14" viewBox="0 0 24 24" style="vertical-align:-2px"><rect x="2" y="3" width="20" height="16" rx="5" fill="#07C160"/><path d="M7 9h10M7 13h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg> 原文</a>` :
       `<span class="no-data">—</span>`;
     return `<tr>
       <td>${d.name}${d.urgent?' <span class="badge">⚠</span>':''}</td>
