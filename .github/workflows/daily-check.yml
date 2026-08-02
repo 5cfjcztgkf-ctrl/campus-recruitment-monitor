@@ -3,9 +3,10 @@ name: 目标高校进校信息监控
 on:
   schedule:
     # 北京时间 08/10/12/14/16/17/18/20 点 = UTC 00/02/04/06/08/09/10/12 点
-    # 用 :07 避开整点流量高峰，GitHub Actions 在整点最拥堵容易跳过
     - cron: "7 0,2,4,6,8,9,10,12 * * *"
   workflow_dispatch:  # 允许手动触发
+  repository_dispatch:  # 允许外部 webhook 触发（绕开 cron 限流）
+    types: [daily-check]
 
 permissions:
   contents: write

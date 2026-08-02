@@ -3,9 +3,10 @@ name: 友商宣讲行程监控
 on:
   schedule:
     # 北京时间 9/11/13/15/19/21 点 = UTC 1/3/5/7/11/13 点
-    # 用 :37 避开整点流量高峰，与秋招工作流(:07)错开30分钟
     - cron: "37 1,3,5,7,11,13 * * *"
   workflow_dispatch:  # 允许手动触发
+  repository_dispatch:  # 允许外部 webhook 触发（绕开 cron 限流）
+    types: [company-check]
 
 permissions:
   contents: write
