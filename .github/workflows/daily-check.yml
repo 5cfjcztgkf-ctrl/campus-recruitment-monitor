@@ -1,4 +1,4 @@
-name: 每日秋招监控
+name: 目标高校进校信息监控
 
 on:
   schedule:

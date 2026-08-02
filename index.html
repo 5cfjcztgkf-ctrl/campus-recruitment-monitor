@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>秋招监控看板</title>
+<title>目标高校进校信息监控看板</title>
 <style>
   /* ===== 全局变量 ===== */
   :root {
@@ -169,7 +169,7 @@
 <div id="lockScreen">
   <div class="lock-box">
     <div class="lock-icon">🔒</div>
-    <h2>秋招监控看板</h2>
+    <h2>目标高校进校信息监控看板</h2>
     <div class="hint">27所目标高校 · 秋招进校 + 友商行程</div>
     <input type="password" id="pwdInput" placeholder="输入密码" autofocus>
     <button onclick="verify()">确认</button>
@@ -183,7 +183,7 @@
 
   <!-- 页头 -->
   <div class="header">
-    <h1 id="headerTitle">🎯 秋招监控看板</h1>
+    <h1 id="headerTitle">🎯 目标高校进校信息监控看板</h1>
     <div class="sub">27 所目标高校 · 2027 届秋季校园招聘</div>
     <div class="update-time" id="updateTime">加载中...</div>
   </div>
@@ -191,14 +191,14 @@
   <!-- Tab 切换 -->
   <div class="tab-bar">
     <button class="tab-btn active" id="tabCampus" onclick="switchTab('campus')">
-      <span class="tab-dot campus-dot"></span> 秋招进校
+      <span class="tab-dot campus-dot"></span> 目标高校进校信息
     </button>
     <button class="tab-btn" id="tabCompany" onclick="switchTab('company')">
       <span class="tab-dot company-dot"></span> 友商行程
     </button>
   </div>
 
-  <!-- ========== 看板1: 秋招进校 ========== -->
+  <!-- ========== 看板1: 目标高校进校信息 ========== -->
   <div class="panel active" id="panelCampus">
     <div class="stats campus-stats" id="campusStats"></div>
     <div class="filter-bar" id="campusFilterBar"></div>
@@ -282,7 +282,7 @@ function switchTab(tab) {
   document.getElementById('panelCompany').classList.toggle('active', tab === 'company');
 
   if (tab === 'campus') {
-    document.getElementById('headerTitle').textContent = '🎯 秋招进校监控看板';
+    document.getElementById('headerTitle').textContent = '🎯 目标高校进校信息监控看板';
     document.querySelector('.sub').textContent = '27 所目标高校 · 2027 届秋季校园招聘';
   } else {
     document.getElementById('headerTitle').textContent = '🏢 友商宣讲行程监控看板';
@@ -296,7 +296,7 @@ function loadCurrentTab() {
   else if (activeTab === 'company' && !companyLoaded) loadCompany();
 }
 
-// ==================== 看板1: 秋招进校 ====================
+// ==================== 看板1: 目标高校进校信息 ====================
 let campusFilter = 'all';
 
 async function loadCampus() {
