@@ -8,12 +8,26 @@
     "华为": {
       "career_url": "https://career.huawei.com/reccampportal/portal5/campus-recruitment.html",
       "career_api_url": "https://career.huawei.com/reccampportal/services/portal/portaluser/queryCampusRecruitmentInfos",
-      "wechat_keyword": "华为 校招 宣讲会 2027届"
+      "wechat_keyword": "华为 校招 宣讲会 2027届",
+      "wechat_accounts": [
+        "华为武汉长沙招聘",
+        "华为京津东北招聘",
+        "华为上海合肥招聘",
+        "华为江苏山东招聘",
+        "华为杭州厦门招聘",
+        "华为粤港澳招聘",
+        "华为西北招聘",
+        "华为成都重庆招聘",
+        "华为招聘"
+      ]
     },
     "长鑫存储": {
       "career_url": "https://www.cxmt.com/career/campus",
       "career_api_url": "",
-      "wechat_keyword": "长鑫存储 校招 宣讲会 2027届"
+      "wechat_keyword": "长鑫存储 校招 宣讲会 2027届",
+      "wechat_accounts": [
+        "长鑫存储招聘"
+      ]
     }
   },
   "universities": [
@@ -31,7 +45,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为武汉长沙招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "whu",
@@ -47,7 +68,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为武汉长沙招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "whut",
@@ -63,7 +91,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为武汉长沙招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "cug",
@@ -79,7 +114,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为武汉长沙招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "ustc",
@@ -95,7 +137,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为上海合肥招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "nankai",
@@ -111,7 +160,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为京津东北招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "jlu",
@@ -127,7 +183,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为京津东北招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "neu",
@@ -143,7 +206,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为京津东北招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "dlut",
@@ -159,7 +229,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为京津东北招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "scut",
@@ -175,7 +252,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为粤港澳招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "csu",
@@ -191,7 +275,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为武汉长沙招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "uestc",
@@ -207,7 +298,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为成都重庆招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "shanghaitech",
@@ -223,7 +321,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为上海合肥招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "xjtu",
@@ -239,7 +344,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为西北招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "xidian",
@@ -255,7 +367,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为西北招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "nwu",
@@ -271,7 +390,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为西北招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "pku",
@@ -287,7 +413,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为京津东北招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "tsinghua",
@@ -303,7 +436,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为京津东北招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "ucas",
@@ -319,7 +459,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为京津东北招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "fudan",
@@ -335,7 +482,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为上海合肥招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "sjtu",
@@ -351,7 +505,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为上海合肥招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "xmu",
@@ -367,7 +528,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为杭州厦门招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "zzu",
@@ -383,7 +551,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为武汉长沙招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "nju",
@@ -399,7 +574,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为江苏山东招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "seu",
@@ -415,7 +597,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为江苏山东招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "zju",
@@ -431,7 +620,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为杭州厦门招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     },
     {
       "id": "cqu",
@@ -447,7 +643,14 @@
       "cxmt": {
         "status": "not_found",
         "events": []
-      }
+      },
+      "wechat_huawei_accounts": [
+        "华为招聘",
+        "华为成都重庆招聘"
+      ],
+      "wechat_cxmt_accounts": [
+        "长鑫存储招聘"
+      ]
     }
   ]
 }

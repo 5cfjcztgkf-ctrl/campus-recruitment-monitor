@@ -2,7 +2,18 @@
 """
 友商宣讲行程监控 - 三路情报系统
 ===================================
-策略1: 微信公众平台 → DuckDuckGo/Bing 搜索 mp.weixin.qq.com 文章
+策略1: 微信官方号精准搜索 → 华为8个区域号 + 长鑫存储招聘号
+       通过 DuckDuckGo 搜 mp.weixin.qq.com 域名，限定官方公众号名称
+       区域分布：
+         华为招聘(主号)       → 全部27校
+         华为武汉长沙招聘       → 华科/武大/武理工/地大/中南/郑大
+         华为京津东北招聘       → 北大/清华/国科大/南开/吉大/东北大学/大连理工
+         华为上海合肥招聘       → 复旦/上交/上海科大/中科大
+         华为江苏山东招聘       → 南大/东南
+         华为杭州厦门招聘       → 浙大/厦大
+         华为粤港澳招聘         → 华南理工
+         华为西北招聘           → 西交/西电/西北大学
+         华为成都重庆招聘       → 电子科大/重大
 策略2: 公司校招官网 → 华为 career.huawei.com / 长鑫存储 cxmt.com
 策略3: 各校就业网   → 直接抓取就业信息网宣讲会页面
 
@@ -197,58 +208,60 @@ def merge_events(all_events):
 
 
 # ============================================================
-# 策略1: 微信公众平台 (通过 DuckDuckGo 搜索)
+# 策略1: 微信公众平台 — 官方号精准搜索
 # ============================================================
 
-def strategy_1_wechat(univ_name, short_name, company_name):
-    """通过 DuckDuckGo 搜索微信公众号文章"""
-    query = f"site:mp.weixin.qq.com {company_name} {univ_name} 宣讲会 2027"
-    url = f"https://html.duckduckgo.com/html/?q={quote(query)}"
-    print(f"     [策略1-微信] 搜索: {company_name} {short_name}...", end=" ")
+def strategy_1_wechat(univ_name, short_name, company_name, wechat_accounts):
+    """通过 DuckDuckGo 搜索指定的微信公众号文章
 
-    html, soup, error = fetch_page(url)
-    if error:
-        print(f"❌ {error}")
-        return []
-
-    results = soup.select(".result__body")
-    events = []
+    例如搜索: site:mp.weixin.qq.com "华为武汉长沙招聘" 华中科技大学 宣讲会 2027
+    """
+    all_events = []
     school_names = [univ_name]
     if short_name != univ_name:
         school_names.append(short_name)
 
-    for item in results[:10]:
-        link = item.select_one(".result__url")
-        snippet = item.select_one(".result__snippet")
-        title_el = item.select_one(".result__title a")
+    for account in wechat_accounts:
+        query = f'site:mp.weixin.qq.com "{account}" {company_name} {univ_name} 宣讲会 2027'
+        url = f"https://html.duckduckgo.com/html/?q={quote(query)}"
 
-        if not snippet:
+        html, soup, error = fetch_page(url)
+        if error:
             continue
 
-        text = snippet.get_text(" ", strip=True)
-        # 必须同时包含公司名和学校名
-        if company_name not in text:
-            continue
-        if not is_school_related(text, school_names):
-            continue
-        if any(kw in text for kw in EXCLUDE_KEYWORDS):
-            continue
+        results = soup.select(".result__body")
+        for item in results[:8]:
+            link = item.select_one(".result__url")
+            snippet = item.select_one(".result__snippet")
+            title_el = item.select_one(".result__title a")
+            if not snippet:
+                continue
 
-        dates = extract_dates(text)
-        venue = extract_venue(text)
-        event_time = extract_time(text)
-        source_url = link.get_text(strip=True) if link else ""
-        title = title_el.get_text(strip=True) if title_el else text[:80]
+            text = snippet.get_text(" ", strip=True)
+            if company_name not in text:
+                continue
+            if not is_school_related(text, school_names):
+                continue
+            if any(kw in text for kw in EXCLUDE_KEYWORDS):
+                continue
 
-        for d in dates[:2]:
-            events.append(make_event(d[1], event_time, venue, source_url,
-                                     "微信公众号", title))
+            dates = extract_dates(text)
+            venue = extract_venue(text)
+            event_time = extract_time(text)
+            source_url = link.get_text(strip=True) if link else ""
+            title = title_el.get_text(strip=True) if title_el else text[:80]
 
-    if events:
-        print(f"✅ 找到 {len(events)} 条")
+            for d in dates[:2]:
+                evt = make_event(d[1], event_time, venue, source_url,
+                                 f"📡 {account}", title)
+                if evt not in all_events:
+                    all_events.append(evt)
+
+    if all_events:
+        print(f"     [策略1-微信] ✅ 找到 {len(all_events)} 条 (查了{len(wechat_accounts)}个号)")
     else:
-        print("⚪ 无结果")
-    return events
+        print(f"     [策略1-微信] ⚪ 无结果 ({len(wechat_accounts)}个号均无)")
+    return all_events
 
 
 # ============================================================
@@ -495,14 +508,21 @@ def check_university_company(u, company_name):
     short_name = u.get("short_name", univ_name)
     search_url = u.get("presentation_search_url", "")
 
+    # 确定微信搜索用哪些公众号
+    if company_name == "华为":
+        wechat_accounts = u.get("wechat_huawei_accounts", ["华为招聘"])
+    else:
+        wechat_accounts = u.get("wechat_cxmt_accounts", ["长鑫存储招聘"])
+
     all_events = []
 
     # 并行运行3个策略
     with ThreadPoolExecutor(max_workers=3) as executor:
         futures = {}
 
-        # 策略1: 微信
-        f1 = executor.submit(strategy_1_wechat, univ_name, short_name, company_name)
+        # 策略1: 微信 (精准搜索官方号)
+        f1 = executor.submit(strategy_1_wechat, univ_name, short_name,
+                            company_name, wechat_accounts)
         futures[f1] = "策略1-微信"
 
         # 策略2: 公司官网
