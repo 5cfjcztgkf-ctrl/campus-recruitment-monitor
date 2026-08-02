@@ -1,4 +1,4 @@
-name: 企业宣讲会监控
+name: 友商宣讲行程监控
 
 on:
   schedule:
