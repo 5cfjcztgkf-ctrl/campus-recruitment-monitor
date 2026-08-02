@@ -8,15 +8,11 @@
     "华为": {
       "career_url": "https://career.huawei.com/reccampportal/portal5/campus-recruitment.html",
       "career_api_url": "https://career.huawei.com/reccampportal/services/portal/portaluser/queryCampusRecruitmentInfos",
-      "nowcoder_search": "https://www.nowcoder.com/search?type=post&query=华为",
-      "yingjiesheng_search": "https://www.yingjiesheng.com/searchresult?keyword=华为",
       "wechat_keyword": "华为 校招 宣讲会 2027届"
     },
     "长鑫存储": {
       "career_url": "https://www.cxmt.com/career/campus",
       "career_api_url": "",
-      "nowcoder_search": "https://www.nowcoder.com/search?type=post&query=长鑫存储",
-      "yingjiesheng_search": "https://www.yingjiesheng.com/searchresult?keyword=长鑫存储",
       "wechat_keyword": "长鑫存储 校招 宣讲会 2027届"
     }
   },

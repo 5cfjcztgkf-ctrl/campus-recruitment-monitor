@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """
-企业宣讲会监控 - 四路情报系统
+友商宣讲行程监控 - 三路情报系统
 ===================================
 策略1: 微信公众平台 → DuckDuckGo/Bing 搜索 mp.weixin.qq.com 文章
 策略2: 公司校招官网 → 华为 career.huawei.com / 长鑫存储 cxmt.com
-策略3: 第三方平台   → 牛客网 nowcoder.com / 应届生 yingjiesheng.com
-策略4: 各校就业网   → 直接抓取就业信息网宣讲会页面
+策略3: 各校就业网   → 直接抓取就业信息网宣讲会页面
 
 运行环境: GitHub Actions (ubuntu-latest)
 依赖: pip install requests beautifulsoup4
@@ -402,75 +401,10 @@ def _strategy_2_cxmt(univ_name, short_name):
 
 
 # ============================================================
-# 策略3: 第三方平台 (牛客网 / 应届生)
+# 策略3: 各校就业网 (原有方案)
 # ============================================================
 
-def strategy_3_third_party(univ_name, short_name, company_name):
-    """搜索牛客网和应届生求职网"""
-    events = []
-
-    # 3a. 牛客网
-    nowcoder_url = f"https://www.nowcoder.com/search?type=post&query={quote(company_name + ' ' + univ_name)}"
-    print(f"     [策略3-牛客] 搜索中...", end=" ")
-
-    html, soup, error = fetch_page(nowcoder_url, headers_extra={
-        "Accept": "text/html,application/xhtml+xml",
-    })
-    if error:
-        print(f"❌ {error}", end=" ")
-    elif soup:
-        body = soup.get_text(" ", strip=True)
-        school_names = [univ_name]
-        if short_name != univ_name:
-            school_names.append(short_name)
-
-        if is_school_related(body, school_names) and company_name in body:
-            dates = extract_dates(body)
-            venue = extract_venue(body)
-            event_time = extract_time(body)
-            for d in dates[:2]:
-                events.append(make_event(
-                    d[1], event_time, venue, nowcoder_url,
-                    "牛客网", f"[牛客] {company_name} {univ_name} 宣讲会"
-                ))
-            print(f"✅ {len(dates[:2])} 条", end=" ")
-        else:
-            print("⚪", end=" ")
-
-    # 3b. 应届生求职网
-    yjs_url = f"https://www.yingjiesheng.com/searchresult?keyword={quote(company_name)}"
-    print(f"| [策略3-应届生]...", end=" ")
-
-    html, soup, error = fetch_page(yjs_url)
-    if error:
-        print(f"❌ {error}")
-    elif soup:
-        body = soup.get_text(" ", strip=True)
-        school_names = [univ_name]
-        if short_name != univ_name:
-            school_names.append(short_name)
-
-        if is_school_related(body, school_names) and company_name in body:
-            dates = extract_dates(body)
-            venue = extract_venue(body)
-            event_time = extract_time(body)
-            for d in dates[:2]:
-                evt = make_event(d[1], event_time, venue, yjs_url,
-                                "应届生求职网", f"[应届生] {company_name} {univ_name} 宣讲会")
-                if evt not in events:
-                    events.append(evt)
-            print(f"✅ 新增")
-        else:
-            print("⚪")
-
-    return events
-
-
-# ============================================================
-# 策略4: 各校就业网 (原有方案)
-# ============================================================
-
-def strategy_4_employment_site(univ_name, short_name, company_name, search_url):
+def strategy_3_employment_site(univ_name, short_name, company_name, search_url):
     """直接抓取就业信息网宣讲会页面"""
     if not search_url:
         return []
@@ -556,15 +490,15 @@ def strategy_4_employment_site(univ_name, short_name, company_name, search_url):
 # ============================================================
 
 def check_university_company(u, company_name):
-    """对单个高校+公司，同时运行4个策略"""
+    """对单个高校+公司，同时运行3个策略"""
     univ_name = u["name"]
     short_name = u.get("short_name", univ_name)
     search_url = u.get("presentation_search_url", "")
 
     all_events = []
 
-    # 并行运行4个策略
-    with ThreadPoolExecutor(max_workers=4) as executor:
+    # 并行运行3个策略
+    with ThreadPoolExecutor(max_workers=3) as executor:
         futures = {}
 
         # 策略1: 微信
@@ -575,14 +509,10 @@ def check_university_company(u, company_name):
         f2 = executor.submit(strategy_2_career_site, univ_name, short_name, company_name)
         futures[f2] = "策略2-公司官网"
 
-        # 策略3: 第三方
-        f3 = executor.submit(strategy_3_third_party, univ_name, short_name, company_name)
-        futures[f3] = "策略3-第三方"
-
-        # 策略4: 就业网
-        f4 = executor.submit(strategy_4_employment_site,
+        # 策略3: 就业网
+        f3 = executor.submit(strategy_3_employment_site,
                             univ_name, short_name, company_name, search_url)
-        futures[f4] = "策略4-就业网"
+        futures[f3] = "策略3-就业网"
 
         for future in as_completed(futures):
             label = futures[future]
@@ -608,10 +538,10 @@ def check_university_company(u, company_name):
 
 def main():
     print("=" * 60)
-    print("  企业宣讲会监控 - 四路情报系统")
+    print("  友商宣讲行程监控 - 三路情报系统")
     print(f"  时间: {datetime.now(TZ).strftime('%Y-%m-%d %H:%M:%S')} 北京时间")
     print(f"  范围: 27所高校 × 华为+长鑫存储")
-    print(f"  策略: 微信 | 公司官网 | 牛客/应届生 | 就业网")
+    print(f"  策略: 微信 | 公司官网 | 就业网")
     print("=" * 60)
     print()
 
