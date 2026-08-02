@@ -80,6 +80,7 @@
   .event-card .e-row .e-val{color:var(--text)}
   .event-link{display:inline-block;margin-top:4px;font-size:.7rem;color:var(--accent);text-decoration:none}
   .event-link:hover{text-decoration:underline}
+  .source-tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.64rem;background:rgba(78,140,255,.1);color:var(--accent);border:1px solid rgba(78,140,255,.2)}
   .legend{display:flex;gap:16px;margin-top:14px;font-size:.72rem;color:var(--text-secondary);flex-wrap:wrap}
   .legend span{display:flex;align-items:center;gap:4px}
   .loading{text-align:center;padding:40px;color:var(--text-secondary)}
@@ -274,7 +275,10 @@ function renderCompanyDetail(cd, cname, cls){
           <span class="e-item"><span class="e-label">📍</span><span class="e-val">${e.venue||'待定'}</span></span>
           ${e.type ? `<span class="e-item"><span class="e-label">📋</span><span class="e-val">${e.type}</span></span>` : ''}
         </div>
-        ${e.source_url ? `<a href="${e.source_url}" target="_blank" rel="noopener" class="event-link">查看原文 →</a>` : ''}
+        <div style="display:flex;align-items:center;gap:8px;margin-top:4px;flex-wrap:wrap">
+          ${e.source_label ? `<span class="source-tag">📡 ${e.source_label}</span>` : ''}
+          ${e.source_url ? `<a href="${e.source_url}" target="_blank" rel="noopener" class="event-link">查看原文 →</a>` : ''}
+        </div>
         ${e.notes ? `<div style="font-size:.66rem;color:var(--text-secondary);margin-top:2px">${e.notes}</div>` : ''}
       </div>`;
     });
