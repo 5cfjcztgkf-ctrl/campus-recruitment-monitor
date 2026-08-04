@@ -1,0 +1,29 @@
+name: 每日看板日报
+
+on:
+  schedule:
+    # 北京时间 22:00 = UTC 14:00
+    - cron: "0 14 * * *"
+  workflow_dispatch:  # 允许手动触发
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  send-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 发送日报邮件
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          QQ_MAIL_AUTH: ${{ secrets.QQ_MAIL_AUTH }}
+        run: python report.py
