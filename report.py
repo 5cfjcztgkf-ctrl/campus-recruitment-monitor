@@ -5,6 +5,8 @@ import json
 import smtplib
 import urllib.request
 from email.mime.text import MIMEText
+from email.utils import formataddr
+from email.header import Header
 from datetime import datetime, timezone, timedelta
 
 # ========== 配置 ==========
@@ -166,7 +168,7 @@ html = f"""\
 
 # ========== 5. 发送邮件 ==========
 msg = MIMEText(html, "html", "utf-8")
-msg["From"] = f"校招看板 <{QQ_MAIL}>"
+msg["From"] = formataddr((str(Header("校招看板", "utf-8")), QQ_MAIL))
 msg["To"] = QQ_MAIL
 msg["Subject"] = f"📡 校招看板日报 | {today_str}"
 
