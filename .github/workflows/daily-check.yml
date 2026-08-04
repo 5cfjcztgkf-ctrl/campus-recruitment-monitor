@@ -2,12 +2,17 @@ name: 目标高校进校信息监控
 
 on:
   schedule:
-    # 北京时间 08-20 点每小时 = UTC 00-12 点，整点 7 分触发
-    # 共 13 次/天，即使被限流也能保证足够的实际执行次数
+    # 北京时间 08-20 点每小时 = UTC 00-12 点
+    # 双 cron 错峰触发（:07 + :30），提高实际执行概率
     - cron: "7 0-12 * * *"
+    - cron: "30 0-12 * * *"
   workflow_dispatch:  # 允许手动触发
-  repository_dispatch:  # 允许外部 webhook 触发（绕开 cron 限流）
+  repository_dispatch:  # 允许外部 webhook 触发
     types: [daily-check]
+
+concurrency:
+  group: daily-check
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -35,7 +40,7 @@ jobs:
 
       - name: 运行检查脚本
         id: check
-        continue-on-error: true  # 即使检查失败也继续部署
+        continue-on-error: true
         run: python check.py
 
       - name: 提交数据更新
