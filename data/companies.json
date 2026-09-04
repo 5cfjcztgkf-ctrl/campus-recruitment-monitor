@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-04T00:43:52+08:00",
+  "last_updated": "2026-09-04T13:53:54+08:00",
   "companies": [
     "华为",
     "长鑫存储"
@@ -269,8 +269,18 @@
       "presentation_search_url": "https://career.csu.edu.cn/campus",
       "wechat_account": "中南大学就业指导中心",
       "huawei": {
-        "status": "not_found",
-        "events": []
+        "status": "scheduled",
+        "events": [
+          {
+            "date": "2026-09-04",
+            "time": "12:04",
+            "venue": "",
+            "source_url": "https://career.csu.edu.cn/campus/view/id/589332",
+            "source_label": "高校就业网",
+            "type": "宣讲会",
+            "notes": "华为技术有限公司"
+          }
+        ]
       },
       "cxmt": {
         "status": "not_found",
